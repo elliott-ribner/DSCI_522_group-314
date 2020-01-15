@@ -6,7 +6,7 @@ To make clear what is expected, everyone participating in DSCI_522_group-314 act
 
 ### DSCI_522_group-314 Code of Conduct:
 
-For DSCI_532_Group_314, we are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. As such, we do not tolerate behaviour that is disrespectful to our teachers or learners or that excludes, intimidates, or causes discomfort to others. We do not tolerate discrimination or harassment based on characteristics that include, but are not limited to, gender identity and expression, sexual orientation, disability, physical appearance, body size, citizenship, nationality, ethnic or social origin, pregnancy, familial status, veteran status, genetic information, religion or belief (or lack thereof), membership of a national minority, property, age, education, socio-economic status, technical choices, and experience level.
+For DSCI_522_group-314, we are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. As such, we do not tolerate behaviour that is disrespectful to our teachers or learners or that excludes, intimidates, or causes discomfort to others. We do not tolerate discrimination or harassment based on characteristics that include, but are not limited to, gender identity and expression, sexual orientation, disability, physical appearance, body size, citizenship, nationality, ethnic or social origin, pregnancy, familial status, veteran status, genetic information, religion or belief (or lack thereof), membership of a national minority, property, age, education, socio-economic status, technical choices, and experience level.
 
 Everyone who participates in DSCI_522_group-314 activities is required to conform to this Code of Conduct. It applies to all spaces managed by DSCI 100 including, but not limited to, class meetings, email communication, and online forums such as Piazza and GitHub. 
 
@@ -38,7 +38,7 @@ continuing to initiate interaction (including photography or recording) with som
 
 ### Consequences of Unacceptable Behavior
 
-Participants who are asked to stop any inappropriate behavior are expected to comply immediately. This applies to any DSCI_522_group-314 meetings, either online or in-person. If a participant engages in behavior that violates this code of conduct, the team may warn the offender and or engage the DSCI_532 Instructor to investigate the Code of Conduct violation and impose appropriate sanctions.
+Participants who are asked to stop any inappropriate behavior are expected to comply immediately. This applies to any DSCI_522_group-314 meetings, either online or in-person. If a participant engages in behavior that violates this code of conduct, the team may warn the offender and or engage the DSCI_522 Instructor to investigate the Code of Conduct violation and impose appropriate sanctions.
 
 Incident Reporting Guidelines
 Contact points
