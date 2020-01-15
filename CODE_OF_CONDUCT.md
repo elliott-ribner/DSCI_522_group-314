@@ -4,7 +4,7 @@ For DSCI_522_group-314, we are committed to creating a friendly and respectful p
 
 To make clear what is expected, everyone participating in DSCI_522_group-314 activities is required to conform to the Code of Conduct. This Code of Conduct applies to all spaces managed by DSCI_522_group-314 including, but not limited to, class meetings, email communication, and online forums such as Piazza and GitHub. 
 
-### DSCI_532_Group_113 Code of Conduct:
+### DSCI_522_group-314 Code of Conduct:
 
 For DSCI_532_Group_314, we are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. As such, we do not tolerate behaviour that is disrespectful to our teachers or learners or that excludes, intimidates, or causes discomfort to others. We do not tolerate discrimination or harassment based on characteristics that include, but are not limited to, gender identity and expression, sexual orientation, disability, physical appearance, body size, citizenship, nationality, ethnic or social origin, pregnancy, familial status, veteran status, genetic information, religion or belief (or lack thereof), membership of a national minority, property, age, education, socio-economic status, technical choices, and experience level.
 
