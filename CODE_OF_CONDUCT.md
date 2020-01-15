@@ -1,6 +1,6 @@
 ### Introduction:
 
-For SCI_522_group-314, we are committed to creating a friendly and respectful place for learning, teaching and contributing. All participants in this group and communications are expected to show respect and courtesy to others.
+For DSCI_522_group-314, we are committed to creating a friendly and respectful place for learning, teaching and contributing. All participants in this group and communications are expected to show respect and courtesy to others.
 
 To make clear what is expected, everyone participating in DSCI_522_group-314 activities is required to conform to the Code of Conduct. This Code of Conduct applies to all spaces managed by DSCI_522_group-314 including, but not limited to, class meetings, email communication, and online forums such as Piazza and GitHub. 
 
@@ -8,7 +8,7 @@ To make clear what is expected, everyone participating in DSCI_522_group-314 act
 
 For DSCI_532_Group_314, we are dedicated to providing a welcoming and supportive environment for all people, regardless of background or identity. As such, we do not tolerate behaviour that is disrespectful to our teachers or learners or that excludes, intimidates, or causes discomfort to others. We do not tolerate discrimination or harassment based on characteristics that include, but are not limited to, gender identity and expression, sexual orientation, disability, physical appearance, body size, citizenship, nationality, ethnic or social origin, pregnancy, familial status, veteran status, genetic information, religion or belief (or lack thereof), membership of a national minority, property, age, education, socio-economic status, technical choices, and experience level.
 
-Everyone who participates in DSCI_522_group-314activities is required to conform to this Code of Conduct. It applies to all spaces managed by DSCI 100 including, but not limited to, class meetings, email communication, and online forums such as Piazza and GitHub. 
+Everyone who participates in DSCI_522_group-314 activities is required to conform to this Code of Conduct. It applies to all spaces managed by DSCI 100 including, but not limited to, class meetings, email communication, and online forums such as Piazza and GitHub. 
 
 ### Expected Behavior
 All participants in our events and communications are expected to show respect and courtesy to others. All interactions should be professional regardless of platform: either online or in-person. In order to foster a positive and professional learning environment we encourage the following kinds of behaviours in all DSCI_522_group-314 meetings:
@@ -42,7 +42,7 @@ Participants who are asked to stop any inappropriate behavior are expected to co
 
 Incident Reporting Guidelines
 Contact points
-If someone violates the Code of Conduct during a DSCI_522_group-314 event we ask that you report it to a member of the teaching team. The person you have talked to should make a report to the DSCI_532 Instructor.
+If someone violates the Code of Conduct during a DSCI_522_group-314 event we ask that you report it to a member of the teaching team. The person you have talked to should make a report to the DSCI_522 Instructor.
 
 
 ### Attribution
