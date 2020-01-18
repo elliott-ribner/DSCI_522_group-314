@@ -6,7 +6,7 @@ The prediction of Customer default payments is an important issue in risk manage
 
 *Data Set:*
 
-Data Set is publicly available from UCI Machine Learning Repository Irvine, CA: University of California, School of Information and Computer Science . The data contain 30,000 instances in total and 23 features about customers' payment, bill histories and demographic factors.
+Data Set is publicly available from [UCI Machine Learning Repository Irvine, CA: University of California, School of Information and Computer Science](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients). The data contain 30,000 instances in total and 23 features about customers' payment, bill histories and demographic factors.
 
 *Research question:*
 
