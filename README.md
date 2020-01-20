@@ -8,7 +8,7 @@ This project was carried out as a part of the requirements MDS-UBC program
 
 - [Exploratory data analysis ipynb](https://github.com/UBC-MDS/DSCI_522_group-314/blob/master/src/eda.ipynb)  
 - [Proposal](#Proposal)    
-- [Release url](Todo)
+- [Release url](https://github.com/UBC-MDS/DSCI_522_group-314/releases/tag/v0.1.0)
 
 ## Proposal  
 
