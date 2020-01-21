@@ -45,4 +45,5 @@ _Installation_
 ```
  python src/dl_xls_to_csv.py --output=credit-default-data.csv
  python src/wrangle.py --input=credit-default-data.csv --output=cleaned-credit-default-data.csv
+ python src/analysis.py --input=cleaned-credit-default-data.csv --output=results
 ```
