@@ -1,0 +1,6 @@
+,result
+test accuracy,0.6872
+train accuracy,0.6848444444444445
+test recall,0.6586102719033232
+test precision,0.3796586555207245
+auc score,0.7230038843331895
