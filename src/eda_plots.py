@@ -44,36 +44,9 @@ def main(filepath, outdir, webbrowser='chrome'):
     categorical_features = ['SEX', 'EDUCATION', 'MARRIAGE', 'PAY_1', 'PAY_2',
            'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6']
 
-    #save summary table as .csv
+    #save overview & summary table as .csv
+    df_train.head().to_csv(f'./{outdir}/head.csv')
     X_train[numeric_features].describe().to_csv(f'./{outdir}/num_describe.csv')
-
-    #Numeric features overview chart
-    row = alt.vconcat()
-    col = alt.hconcat()
-    ncol = 4  #how many to display in each row
-    for i in range(len(numeric_features)):
-        col |= num_bar(X_train, numeric_features[i])
-        if (i+1)%ncol==0:
-            row &= col
-            col = alt.hconcat() 
-    num_bar_chart = row & col
-    num_bar_chart.save(f'./{outdir}/num_bar_chart.png', scale_factor=2, webdriver=webbrowser)
-    
-    #Categorical features overview chart
-    row = alt.vconcat()
-    col = alt.hconcat()
-    ncol = 3  #how many to display in each row
-    for i in range(len(categorical_features)):
-        col |= cat_bar(X_train, categorical_features[i])
-        if (i+1)%ncol==0:
-            row &= col
-            col = alt.hconcat()  
-    cat_bar_chart = row
-    cat_bar_chart.save(f'./{outdir}/cat_bar_chart.png', scale_factor=2, webdriver=webbrowser)
-
-    #Response variable count chart
-    cat_bar(y_train.to_frame(), 
-        'DEFAULT_NEXT_MONTH').save(f'./{outdir}/dep_chart.png', scale_factor=2, webdriver=webbrowser)
         
     #Numeric features correlations
     corr = X_train[numeric_features].corr()
@@ -84,18 +57,6 @@ def main(filepath, outdir, webbrowser='chrome'):
         alt.Color('correlation:Q')
     ).properties(title='Correlations between numeric features')
     num_corr_chart.save(f'./{outdir}/num_corr_chart.png', scale_factor=2, webdriver=webbrowser)
-    
-    #Numeric and categorical features correlations
-    cont_list = ['PAY_AMT3', 'BILL_AMT3', 'LIMIT_BAL']
-    cat_list = ['SEX', 'EDUCATION', 'MARRIAGE']
-    row = alt.vconcat()
-    for cont_var in cont_list:
-        col = alt.hconcat()
-        for cat_var in cat_list:
-            col |= box_plot(X_train, cat_var, cont_var)
-        row &= col
-    num_cat_corr_chart = row.properties(title="Boxplot distribution").configure_title(anchor='middle')
-    num_cat_corr_chart.save(f'./{outdir}/num_cat_corr_chart.png', scale_factor=2, webdriver=webbrowser)
 
     #Numeric and response variable correlations
     row = alt.vconcat()
