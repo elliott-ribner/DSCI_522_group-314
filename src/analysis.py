@@ -3,7 +3,7 @@
 
 '''This script fits a model and outputs several images and csv reports
 
-Usage: src/analysis.py --input=<input> --output=<output>
+Usage: src/analysis.py --input=cleaned-credit-default-data.csv --output=results
 
 Options:
 --input=<input>  Name of csv file to download, must be within the /data directory.
@@ -26,6 +26,9 @@ from docopt import docopt
 opt = docopt(__doc__)
 
 
+def get_report(X_train, y_train, X_test, y_test, output_folder='results'):
+
+
 def main(input, output):
     # turn csv to dataframe
     df = pd.read_csv(f"./data/{input}", index_col=0)
@@ -43,12 +46,12 @@ def main(input, output):
                'PAY_AMT2', 'PAY_AMT3', 'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6']
     scaler = preprocessing.RobustScaler()
     X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=columns)
-    X_test = pd.DataFrame(scaler.fit_transform(X_test), columns=columns)
+    X_test = pd.DataFrame(scaler.transform(X_test), columns=columns)
 
     # Use RFE to identify the most identify the most useful predictors.
     # Then we will drop those columns that are deemed as less useful.
     logreg = LogisticRegression(solver="lbfgs")
-    rfe = RFE(logreg, 14)
+    rfe = RFE(logreg, 7)
     rfe = rfe.fit(X_train, y_train.values.ravel())
     columns_to_drop = list()
     for i in range(len(rfe.support_)):
@@ -80,13 +83,13 @@ def main(input, output):
     accuracies_df = pd.DataFrame(index=['test accuracy', 'train accuracy', 'test recall', 'test precision', 'auc score'], data={
         'result': [test_accuracy, train_accuracy, test_recall, test_precision, auc_score]
     })
-    accuracies_df.to_csv(f'./{output}/accuracies')
+    accuracies_df.to_csv(f'./{output}/accuracies.csv')
 
     # plot and report confusion matrix
     plot_confusion_matrix(best_model, X_test, y_test)
     report = classification_report(y_test, test_predictions, output_dict=True)
     report_df = pd.DataFrame(report)
-    report_df.to_csv(f'./{output}/classification_report')
+    report_df.to_csv(f'./{output}/classification_report.csv')
     plt.savefig(f'./{output}/confusion_matrix.png')
     plt.clf()
 
