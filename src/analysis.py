@@ -26,41 +26,7 @@ from docopt import docopt
 opt = docopt(__doc__)
 
 
-def get_report(X_train, y_train, X_test, y_test, output_folder='results'):
-
-
-def main(input, output):
-    # turn csv to dataframe
-    df = pd.read_csv(f"./data/{input}", index_col=0)
-
-    # split training and test
-    X = df.drop(columns=['DEFAULT_NEXT_MONTH'])
-    y = df['DEFAULT_NEXT_MONTH']
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.25, random_state=122)
-
-    # We use robust scalar as most of our data is not normally distributed and we have a high amount of outliers.
-    columns = ['LIMIT_BAL', 'SEX', 'EDUCATION', 'MARRIAGE', 'AGE', 'PAY_1', 'PAY_2',
-               'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6', 'BILL_AMT1', 'BILL_AMT2',
-               'BILL_AMT3', 'BILL_AMT4', 'BILL_AMT5', 'BILL_AMT6', 'PAY_AMT1',
-               'PAY_AMT2', 'PAY_AMT3', 'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6']
-    scaler = preprocessing.RobustScaler()
-    X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=columns)
-    X_test = pd.DataFrame(scaler.transform(X_test), columns=columns)
-
-    # Use RFE to identify the most identify the most useful predictors.
-    # Then we will drop those columns that are deemed as less useful.
-    logreg = LogisticRegression(solver="lbfgs")
-    rfe = RFE(logreg, 7)
-    rfe = rfe.fit(X_train, y_train.values.ravel())
-    columns_to_drop = list()
-    for i in range(len(rfe.support_)):
-        include = rfe.support_[i]
-        if include == False:
-            columns_to_drop.append(columns[i])
-    X_train = X_train.drop(columns_to_drop, axis=1)
-    X_test = X_test.drop(columns_to_drop, axis=1)
-
+def get_report(X_train, y_train, X_test, y_test, model, output):
     os = SMOTE(random_state=0)
     os_data_X, os_data_y = os.fit_sample(X_train, y_train)
     os_data_X = pd.DataFrame(data=os_data_X, columns=X_train.columns)
@@ -69,7 +35,7 @@ def main(input, output):
     hyperparameters = {
         'C': np.logspace(-4, 4, 20)
     }
-    clf = GridSearchCV(logreg, hyperparameters, cv=5, verbose=0)
+    clf = GridSearchCV(model, hyperparameters, cv=5, verbose=0)
     best_model = clf.fit(os_data_X, os_data_y)
 
     # measure accuracies
@@ -102,6 +68,42 @@ def main(input, output):
     plt.xlabel('false positive rate')
     plt.ylabel('true positive rate')
     plt.savefig(f'./{output}/roc.png')
+
+
+def main(input, output):
+    # turn csv to dataframe
+    df = pd.read_csv(f"./data/{input}", index_col=0)
+
+    # split training and test
+    X = df.drop(columns=['DEFAULT_NEXT_MONTH'])
+    y = df['DEFAULT_NEXT_MONTH']
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.25, random_state=122)
+
+    # We use robust scalar as most of our data is not normally distributed and we have a high amount of outliers.
+    columns = ['LIMIT_BAL', 'SEX', 'EDUCATION', 'MARRIAGE', 'AGE', 'PAY_1', 'PAY_2',
+               'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6', 'BILL_AMT1', 'BILL_AMT2',
+               'BILL_AMT3', 'BILL_AMT4', 'BILL_AMT5', 'BILL_AMT6', 'PAY_AMT1',
+               'PAY_AMT2', 'PAY_AMT3', 'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6']
+    scaler = preprocessing.RobustScaler()
+    X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=columns)
+    X_test = pd.DataFrame(scaler.transform(X_test), columns=columns)
+
+    # Use RFE to identify the most identify the most useful predictors.
+    # Then we will drop those columns that are deemed as less useful.
+    logreg = LogisticRegression(solver="lbfgs")
+
+    get_report(X_train, y_train, X_test, y_test, logreg, 'results_baseline')
+    rfe = RFE(logreg, 7)
+    rfe = rfe.fit(X_train, y_train.values.ravel())
+    columns_to_drop = list()
+    for i in range(len(rfe.support_)):
+        include = rfe.support_[i]
+        if include == False:
+            columns_to_drop.append(columns[i])
+    X_train = X_train.drop(columns_to_drop, axis=1)
+    X_test = X_test.drop(columns_to_drop, axis=1)
+    get_report(X_train, y_train, X_test, y_test, logreg, output)
 
 
 if __name__ == "__main__":
