@@ -1,49 +1,61 @@
-# The Prediction of Customer Default
+# The Prediction of Customer Default  
 
-The prediction of Customer default payments is an important issue in risk management by banks and developing accurate predictive tools is highly needed to mitigate losses associated with Credit Risk. In this data analysis project, we will be using Data Set is publicly available from [UCI Machine Learning Repository Irvine, CA: University of California, School of Information and Computer Science](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients) to find what features predict default payment.
+Author: Elliott Ribner, Mohammed Salama, Zoe Pan  
 
-This project was carried out as a part of the requirements MDS-UBC program
+This project was carried out as a part of the requirements MDS-UBC program  
 
-## Milestone 1
+## Introduction
 
-- [Exploratory data analysis ipynb](https://github.com/UBC-MDS/DSCI_522_group-314/blob/master/src/eda.ipynb)
-- [Proposal](#Proposal)
-- [Release url](https://github.com/UBC-MDS/DSCI_522_group-314/releases/tag/v0.1.0)
+The prediction of Customer default payments is an important issue in risk management by banks and developing accurate predictive tools is highly needed to mitigate losses associated with Credit Risk. In our project, we will use Logistic regression model and the related machine learning techniques to predict customer default payment and therefore help us answer our research question: what features strongly predict default payment.  
 
-## Proposal
+In this data analysis project, we will be using Data Set that is publicly available from [UCI Machine Learning Repository Irvine, CA: University of California, School of Information and Computer Science](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients) to find what features predict default payment. The data, while hosted by UCI, was originally publicized by Chung Hua University of Taiwan and Tamkang University of Taiwan. The data was collected in 2005 from the Taiwanese market. The data contain 30,000 instances in total and 23 features about customers' payment, bill histories and demographic factors.  
 
-**Project proposal**
+As an initial step, the data set will be split into 75% training and 25% testing data set. We will perform exploratory data analysis to the training set to have an overview of distributions of categorical and numeric predictors and count of the default and non-default payment in the response variable to check if data is imbalanced. We will present it as bar plots. Also, we will check correlations between predictors and possible relationships between predictors and the response variable. Because collinearity among predictors will result in indefinite assignment of weights to strongly correlated variables and result in incorrect conclusion. You can find our exploratory data analysis report [here](https://github.com/UBC-MDS/DSCI_522_group-314/tree/master/doc/eda.ipynb).  
 
-_Overview:_
+Due to imbalanced class in the response variable, we will use [SMOTE](https://imbalanced-learn.readthedocs.io/en/stable/generated/imblearn.over_sampling.SMOTE.html)(Synthetic Minority Oversampling Technique) to create a balanced data set to fit the model. Moreover, because most numeric predictors are heavy tailed, we will use [`RobustScaler`](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.RobustScaler.html) to scale predictors for preprocessing. It scales the data based on the quantile range. Then, we will fit the `LogisticRegression` model and hyper-parameter tuning to test different variations of the model to predict the class, because the dataset is not too big and the logistic regression model is interpretable, to help us find predictors that predict default payment. We use [`RFE`](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html#sklearn.feature_selection.RFE)(recursive feature elimination) to prune features and help us to find features predict default payment. We will fit two models, one fitted with pruned features and one fitted with all features as our baseline model for comparison so we know that we don't lose accuracy from less features. Since the data is imbalanced, and different finance companies have different strategies for loan(how risky they are?), we will assess the models usefulness by analyzing the overall accuracy, recall, precision and AUC for both models. The results are presented as confusion matrix and ROC curve plots in the [report](https://github.com/UBC-MDS/DSCI_522_group-314/blob/master/doc/final_report.ipynb). The selected features from the best model will then be used to infer the main features that predict default payment.
 
-The prediction of Customer default payments is an important issue in risk management by banks and developing accurate predictive tools is highly needed to mitigate losses associated with Credit Risk. In this project, we will be using default of credit card clients in Taiwan to predict the credit card default for new customers.
 
-_Data Set:_
+## Usage
 
-Data Set is publicly available from [UCI Machine Learning Repository Irvine, CA: University of California, School of Information and Computer Science](https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients). The data contain 30,000 instances in total and 23 features about customers' payment, bill histories and demographic factors. The data, while hosted by UCI, was originally publicized by Chung Hua University of Taiwan and Tamkang University of Taiwan. The data was collected in 2005 from the Taiwanese market.
+To replicate the analysis, clone this GitHub repository, install the dependencies listed below, and run the following commands at the command line/terminal from the root directory of this project:
 
-_Research question:_
-
-The main scientific question we are asking in this project is a predictive question.  
-What features predict default payment?
-In the course of answering the question, we will be testing several analytical methods and attempts to develop a highly accurate model for the prediction of credit card default.
-
-_How the data will be analyzed:_
-
-As an initial step, the data set will be split into training and testing data set. The training data set will be then used to fit a decision tree at first to learn the weights associated with each feature. Cross-validation will be applied to estimate the accuracy of the model in out-of-sample data. Other models such as Logistic Regression, K-nearest neighborhood and Support Vector Machine will also be explored. We will create a data pipeline that runs these models using cross validation and and hyper-parameter tuning to test different variations of each model. The model with the highest performance will be selected based on the balance between bias and variance. Since the data is slightly imbalanced, and because a default is especially costly to the creditor, we will also access the models usefulness by analyzing the recall and precision rates. The parameters from the best model will then be used to infer the main features that predict default payment. Finally we will test our model on the testing data to evaluate the performance of the model on new data.
-
-_Exploratory Data Analysis:_
-
-The Data Overview table shown in the EDA file provides a summary of the data. EDA was performed on the training data set. After splitting the data into training and test set, it contains 22500 observations. The mean of the credit limit is around 167229 and the mean of the age of customers in the data set is 35.
-
-Exploratory plots were also provided in the EDA. For example, in the plot shown below we showed that there is an association between credit limit and payment default which is expected as credit limit is usually associated with good credit history. Age, on the other hand, does not seem to be able well suited to explain the response variable, which is in our case "DEFAULT_NEXT_MONTH". So, unlike credit limit , age is not expected to be among the strongest predictors for credit default. The many outliers in the boxplot indicate heavy-tail distribution for many of the feature’s relationships such as Limit balance and Sex, Education and Marriage which is important to consider during the subsequent data analysis. In summary, the data set is rich and appropriate for the research question we are trying to answer. The EDA shows that many covariates have strong collinearity. It also reveals that some features are likely to have a stronger association with response than others.
-
-![](img/visualization.png)
-
-_Installation_
-
+- Google Chrome browser
 ```
  python src/dl_xls_to_csv.py --output=credit-default-data.csv
  Rscript src/wrangle.R credit-default-data.csv cleaned-credit-default-data.csv
+ python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results
  python src/analysis.py --input=cleaned-credit-default-data.csv --output=results
 ```
+
+- Mozilla Firefox browser
+```
+ python src/dl_xls_to_csv.py --output=credit-default-data.csv
+ Rscript src/wrangle.R credit-default-data.csv cleaned-credit-default-data.csv
+ python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results firefox
+ python src/analysis.py --input=cleaned-credit-default-data.csv --output=results
+```
+
+## Dependencies
+
+  - Web browser(for python [Altair](https://altair-viz.github.io/user_guide/saving_charts.html) to run and save images):
+      - A recent version Google Chrome or Mozilla Firefox
+      - [Chrome Driver](https://sites.google.com/a/chromium.org/chromedriver/) or [Gecko Driver](https://github.com/mozilla/geckodriver/releases)
+  - Python 3.7.3 and Python packages:
+      - docopt==0.6.2
+      - pandas==0.25.3
+      - sklearn==0.22
+      - altair==3.2.0
+      - selenium==3.141.0
+      - numpy==1.17.4
+      - imblearn=0.6.1
+  - R version 3.6.1 and R packages:
+      - tidyverse==1.2.1
+      - testthat==2.3.1
+      - docopt==0.6.1
+      
+## References  
+
+Dua, Dheeru, and Casey Graff. 2017. “UCI Machine Learning Repository.” University of California, Irvine, School of Information; Computer Sciences. http://archive.ics.uci.edu/ml.  
+Yeh, I. C., & Lien, C. H. (2009). The comparisons of data mining techniques for the predictive accuracy of probability of default of credit card clients. Expert Systems with Applications, 36(2), 2473-2480.  
+
+

@@ -24,7 +24,7 @@ The Data Overview table shown in the EDA file provides a summary of the data. ED
 
 Exploratory plots were also provided in the EDA. For example, in the plot shown below we showed that there is an association between credit limit and payment default which is expected as credit limit is usually associated with good credit history. Age, on the other hand, does not seem to be able well suited to explain the response variable, which is in our case "DEFAULT_NEXT_MONTH". So, unlike credit limit , age is not expected to be among the strongest predictors for credit default. The many outliers in the boxplot indicate heavy-tail distribution for many of the feature’s relationships such as Limit balance and Sex, Education and Marriage which is important to consider during the subsequent data analysis. In summary, the data set is rich and appropriate for the research question we are trying to answer. The EDA shows that many covariates have strong collinearity. It also reveals that some features are likely to have a stronger association with response than others.
 
-![](img/visualization.png)
+![](../results/num_res_chart.png)
 
 
 
