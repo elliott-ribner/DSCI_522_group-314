@@ -55,6 +55,8 @@ def get_report(X_train, y_train, X_test, y_test, model, output):
     plot_confusion_matrix(best_model, X_test, y_test)
     report = classification_report(y_test, test_predictions, output_dict=True)
     report_df = pd.DataFrame(report)
+    report_df = report_df.rename(columns={'0': 'Non Default',
+                                          '1': 'Default'})
     report_df.to_csv(f'./{output}/classification_report.csv')
     plt.savefig(f'./{output}/confusion_matrix.png')
     plt.clf()
