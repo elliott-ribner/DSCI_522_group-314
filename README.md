@@ -16,7 +16,7 @@ Due to imbalanced class in the response variable, we used [SMOTE](https://imbala
 
 - [Proposal](doc/Proposal.md)  
 - [Exploratory data analysis](doc/eda.ipynb)  
-- [Final report](doc/final_report.ipynb)
+- [Final report](https://ubc-mds.github.io/DSCI_522_group-314/doc/final_report.html)  
 
 ## Usage
 
@@ -28,6 +28,7 @@ To replicate the analysis, clone this GitHub repository, install the dependencie
  Rscript src/wrangle.R credit-default-data.csv cleaned-credit-default-data.csv
  python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results
  python src/analysis.py --input=cleaned-credit-default-data.csv --output=results
+ jupyter nbconvert --execute  doc/final_report.ipynb --to html_embed   
 ```
 
 - Mozilla Firefox browser
@@ -36,6 +37,7 @@ To replicate the analysis, clone this GitHub repository, install the dependencie
  Rscript src/wrangle.R credit-default-data.csv cleaned-credit-default-data.csv
  python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results firefox
  python src/analysis.py --input=cleaned-credit-default-data.csv --output=results
+ jupyter nbconvert --execute  doc/final_report.ipynb --to html_embed   
 ```
 
 ## Dependencies
