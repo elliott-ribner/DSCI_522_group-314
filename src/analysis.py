@@ -18,12 +18,15 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 import numpy as np
 from sklearn.metrics import accuracy_score, plot_confusion_matrix, confusion_matrix, classification_report, roc_auc_score, roc_curve
-from sklearn.metrics import recall_score, precision_score
+from sklearn.metrics import recall_score, precision_score, recall_score, make_scorer
 from sklearn.model_selection import GridSearchCV
 from imblearn.over_sampling import SMOTE
 from docopt import docopt
 
 opt = docopt(__doc__)
+
+accuracies_output_df = pd.DataFrame({'measurement': [
+                                    "test accuracy", "train accuracy", "test recall", "test precision", "auc score"]})
 
 
 def get_report(X_train, y_train, X_test, y_test, model, output):
@@ -35,7 +38,8 @@ def get_report(X_train, y_train, X_test, y_test, model, output):
     hyperparameters = {
         'C': np.logspace(-4, 4, 20)
     }
-    clf = GridSearchCV(model, hyperparameters, cv=5, verbose=0)
+    clf = GridSearchCV(model, hyperparameters, cv=5,
+                       verbose=0, scoring=make_scorer(recall_score))
     best_model = clf.fit(os_data_X, os_data_y)
 
     # measure accuracies
@@ -46,17 +50,21 @@ def get_report(X_train, y_train, X_test, y_test, model, output):
     test_recall = recall_score(y_test, test_predictions)
     test_precision = precision_score(y_test, test_predictions)
     auc_score = roc_auc_score(y_test, best_model.predict_proba(X_test)[:, 1])
-    accuracies_df = pd.DataFrame(index=['test accuracy', 'train accuracy', 'test recall', 'test precision', 'auc score'], data={
-        'result': [test_accuracy, train_accuracy, test_recall, test_precision, auc_score]
-    })
-    accuracies_df.to_csv(f'./{output}/accuracies.csv')
+    if (output == "results_baseline"):
+        accuracies_output_df['baseline'] = [
+            test_accuracy, train_accuracy, test_recall, test_precision, auc_score]
+    else:
+        accuracies_output_df['alternate model'] = [
+            test_accuracy, train_accuracy, test_recall, test_precision, auc_score]
 
     # plot and report confusion matrix
-    plot_confusion_matrix(best_model, X_test, y_test)
+    plot_confusion_matrix(best_model, X_test, y_test,
+                          display_labels=['No Default', 'Default'])
     report = classification_report(y_test, test_predictions, output_dict=True)
     report_df = pd.DataFrame(report)
     report_df = report_df.rename(columns={'0': 'Non Default',
                                           '1': 'Default'})
+    report_df.index.name = "measurment"
     report_df.to_csv(f'./{output}/classification_report.csv')
     plt.savefig(f'./{output}/confusion_matrix.png')
     plt.clf()
@@ -107,6 +115,13 @@ def main(input, output):
     X_test = X_test.drop(columns_to_drop, axis=1)
     get_report(X_train, y_train, X_test, y_test, logreg, output)
 
+    # write compounded dataframe with results of two get_report calls
+    accuracies_output_df.to_csv(f'./{output}/accuracies.csv', index=False)
+
 
 if __name__ == "__main__":
     main(input=opt["--input"], output=opt["--output"])
+
+
+assert accuracies_output_df.shape == (
+    5, 3), "dimensions of accuracies is wrong"
