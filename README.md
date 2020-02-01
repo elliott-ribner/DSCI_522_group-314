@@ -34,18 +34,15 @@ make clean
 
 ## Dependencies
 
-  - Web browser(for python Altair to run and save images, see [here](https://altair-viz.github.io/user_guide/saving_charts.html)):
-      - A recent version Google Chrome or Mozilla Firefox
-      - [Chrome Driver](https://sites.google.com/a/chromium.org/chromedriver/) or [Gecko Driver](https://github.com/mozilla/geckodriver/releases)
   - Python 3.7.3 and Python packages:
       - docopt==0.6.2
       - pandas==0.25.3
       - sklearn==0.22
       - altair==3.2.0
-      - selenium==3.141.0
       - numpy==1.17.4
       - imblearn=0.6.1
       - seaborn=0.9.0
+      - matplotlib=3.1.1
   - R version 3.6.1 and R packages:
       - tidyverse==1.2.1
       - testthat==2.3.1
