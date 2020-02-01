@@ -45,7 +45,7 @@ def main(filepath, outdir, webbrowser='chrome'):
            'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6']
 
     #save overview & summary table as .csv
-    df_train.head().to_csv(f'./{outdir}/head.csv')
+    #df_train.head().to_csv(f'./{outdir}/head.csv')
     X_train[numeric_features].describe().to_csv(f'./{outdir}/num_describe.csv')
         
     #Numeric features correlations
@@ -84,33 +84,94 @@ def main(filepath, outdir, webbrowser='chrome'):
 
 
 def num_bar(data, fea):
+    """
+    Parameters:
+    --------------
+    data: dataframe that has numeric column
+    fea: string, name of the numeric column
+
+    Returns:
+    -------------
+    altair histogram chart for numeric features
+
+    """
     return alt.Chart(data).mark_bar().encode(
         alt.X(fea, type='quantitative', bin=alt.Bin(maxbins=10)),
         alt.Y('count()')
     ).properties(title=f'Count of {fea}', height=150, width=200)
 
 def cat_bar(data, fea):
+    """
+    Parameters:
+    --------------
+    data: dataframe that has categorical column
+    fea: string, name of the categorical column
+
+    Returns:
+    -------------
+    altair bar chart for count of categorical features
+
+    """
     return alt.Chart(data).mark_bar().encode(
         alt.X(fea, type='nominal'),
         alt.Y('count()')
     ).properties(title=f'Count of {fea}', height=200)
     
 def box_plot(data, cat_var, cont_var):
+    """
+    Parameters:
+    --------------
+    data: dataframe that has categorical and numeric columns
+    cat_var: string, name of the categorical column
+    cont_var: string, name of the numeric column
+
+    Returns:
+    -------------
+    altair boxplot chart for numeric feature's distributions
+    at different categorical class values
+    """
     return alt.Chart(data).mark_boxplot().encode(
     alt.X(cat_var, type='nominal'),
     alt.Y(cont_var, type='quantitative')
 ).properties(width=150, height=200)
     
 def stack_bar(data, cat_var, res_var_cat):
+    """
+    Parameters:
+    --------------
+    data: dataframe that has categorical and response variable columns
+    cat_var: string, name of the categorical column
+    res_var_cat: string, name of the response variable column(categorical variable)
+
+    Returns:
+    -------------
+    altair stackbar chart for categorical feature's distributions
+    at different response variable's class values
+    """
     return alt.Chart(data).mark_bar().encode(
     alt.Y(res_var_cat, type='nominal', title='Default'),
     alt.X('count()', axis=alt.Axis(grid=False), stack='normalize', title=f'Count of {cat_var} - Normalized'),
     alt.Color(cat_var, type='nominal')
 ).properties(width=400)
 
+def test(filepath):
+    """
+    filepath: path of the .csv file
+    Confirm correct dataset is read in for exploratory data analysis
+    """
+    df = pd.read_csv(f"./{filepath}", index_col=0)
+    assert df.shape == (30000, 24)
+    assert set(df.columns) == set(['LIMIT_BAL', 'SEX', 'EDUCATION', 'MARRIAGE', 'AGE', 'PAY_1', 'PAY_2',
+       'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6', 'BILL_AMT1', 'BILL_AMT2',
+       'BILL_AMT3', 'BILL_AMT4', 'BILL_AMT5', 'BILL_AMT6', 'PAY_AMT1',
+       'PAY_AMT2', 'PAY_AMT3', 'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6',
+       'DEFAULT_NEXT_MONTH']), 'Column names don\'t match, wrong path of the data provided'
+
 
 if __name__ == "__main__":
     if opt['<webbrowser>']:
+        test(opt['--filepath'])
         main(opt['--filepath'], opt['--outdir'], opt['<webbrowser>'])
     else:
+        test(opt['--filepath'])
         main(opt['--filepath'], opt['--outdir'])
