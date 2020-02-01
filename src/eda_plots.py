@@ -19,6 +19,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import altair as alt
 import selenium
+import seaborn as sns
 from docopt import docopt
 opt = docopt(__doc__)
 
@@ -28,14 +29,6 @@ def main(filepath, outdir, webbrowser='chrome'):
     #read data
     df = pd.read_csv(f"./{filepath}", index_col=0)
 
-    # split training and test
-    X = df.drop(columns=['DEFAULT_NEXT_MONTH'])
-    y = df['DEFAULT_NEXT_MONTH']
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.25, random_state=122)
-    df_train = X_train.copy()
-    df_train['DEFAULT_NEXT_MONTH'] = y_train
-
     #create lists for numeric and categorical features
     numeric_features = ['LIMIT_BAL', 'AGE', 'BILL_AMT1', 'BILL_AMT2',
        'BILL_AMT3', 'BILL_AMT4', 'BILL_AMT5', 'BILL_AMT6', 'PAY_AMT1',
@@ -43,6 +36,18 @@ def main(filepath, outdir, webbrowser='chrome'):
 
     categorical_features = ['SEX', 'EDUCATION', 'MARRIAGE', 'PAY_1', 'PAY_2',
            'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6']
+
+    # split training and test
+    X = df.drop(columns=['DEFAULT_NEXT_MONTH'])
+    y = df['DEFAULT_NEXT_MONTH']
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.25, random_state=122)
+    df_train = X_train.copy()
+    df_train['DEFAULT_NEXT_MONTH'] = y_train
+    df_train_melt = df_train.melt(id_vars=['DEFAULT_NEXT_MONTH'],
+                             value_vars=numeric_features,
+                             var_name='Numeric features',
+                             value_name='value')
 
     #save overview & summary table as .csv
     #df_train.head().to_csv(f'./{outdir}/head.csv')
@@ -59,16 +64,8 @@ def main(filepath, outdir, webbrowser='chrome'):
     num_corr_chart.save(f'./{outdir}/num_corr_chart.png', scale_factor=2, webdriver=webbrowser)
 
     #Numeric and response variable correlations
-    row = alt.vconcat()
-    col = alt.hconcat()
-    ncol = 4  #how many to display in each row
-    for i in range(len(numeric_features)):
-        col |= box_plot(df_train, 'DEFAULT_NEXT_MONTH', numeric_features[i])
-        if (i+1)%ncol==0:
-            row &= col
-            col = alt.hconcat()
-    num_res_chart = row & col
-    num_res_chart.save(f'./{outdir}/num_res_chart.png', scale_factor=5, webdriver=webbrowser)
+    num_res_chart = voilinplot(df_train_melt, 'Numeric features');
+    num_res_chart.savefig(f'./{outdir}/num_res_chart.png')
     
     #Categorical and response variable correlations
     ncol = 2  #how many to display in each row
@@ -117,23 +114,21 @@ def cat_bar(data, fea):
         alt.Y('count()')
     ).properties(title=f'Count of {fea}', height=200)
     
-def box_plot(data, cat_var, cont_var):
+def voilinplot(data, cat):
     """
     Parameters:
     --------------
     data: dataframe that has categorical and numeric columns
-    cat_var: string, name of the categorical column
-    cont_var: string, name of the numeric column
+    cat: string, name of the column that stores all categorical features name
 
     Returns:
     -------------
-    altair boxplot chart for numeric feature's distributions
-    at different categorical class values
+    seaborn voilin plot for numeric feature's distributions 
+    at different categorical class values - faceted for all features
     """
-    return alt.Chart(data).mark_boxplot().encode(
-    alt.X(cat_var, type='nominal'),
-    alt.Y(cont_var, type='quantitative')
-).properties(width=150, height=200)
+    g = sns.FacetGrid(data, col=cat, col_wrap=4, height=5, sharey=False)
+    g.map(sns.violinplot, 'DEFAULT_NEXT_MONTH', 'value');
+    return g
     
 def stack_bar(data, cat_var, res_var_cat):
     """

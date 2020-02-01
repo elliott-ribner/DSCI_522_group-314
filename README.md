@@ -22,22 +22,14 @@ Due to imbalanced class in the response variable, we used [SMOTE](https://imbala
 
 To replicate the analysis, clone this GitHub repository, install the dependencies listed below, and run the following commands at the command line/terminal from the root directory of this project:
 
-- Google Chrome browser
 ```
- python src/dl_xls_to_csv.py --output=credit-default-data.csv
- Rscript src/wrangle.R credit-default-data.csv cleaned-credit-default-data.csv
- python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results
- python src/analysis.py --input=cleaned-credit-default-data.csv --output=results
- jupyter nbconvert --execute  doc/final_report.ipynb --to html_embed   
+make all
 ```
 
-- Mozilla Firefox browser
+To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
+
 ```
- python src/dl_xls_to_csv.py --output=credit-default-data.csv
- Rscript src/wrangle.R credit-default-data.csv cleaned-credit-default-data.csv
- python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results firefox
- python src/analysis.py --input=cleaned-credit-default-data.csv --output=results
- jupyter nbconvert --execute  doc/final_report.ipynb --to html_embed   
+make clean
 ```
 
 ## Dependencies
@@ -53,6 +45,7 @@ To replicate the analysis, clone this GitHub repository, install the dependencie
       - selenium==3.141.0
       - numpy==1.17.4
       - imblearn=0.6.1
+      - seaborn=0.9.0
   - R version 3.6.1 and R packages:
       - tidyverse==1.2.1
       - testthat==2.3.1
