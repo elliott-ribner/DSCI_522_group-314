@@ -18,7 +18,7 @@ results/accuracies.csv results/calssification_report.csv results/confusion_matri
 
 #save exploratory plots and tables to results folder	
 results/cat_res_chart.png results/head.csv results/num_describe.csv : data/cleaned-credit-default-data.csv src/eda_plots.py
-	python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results
+	python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results || python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results firefox
 
 #create final report .html	
 doc/final_report.html : results
