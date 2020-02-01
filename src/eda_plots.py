@@ -4,27 +4,25 @@
 '''This script do exploratory data analysis on cleaned data set and produce
    summary table, attributes distribution plots and variables relationship boxplots and bar plots.
 
-Usage: src/eda_plots.py --filepath=<filepath> --outdir=<ourdir>  [<webbrowser>]
+Usage: src/eda_plots.py --filepath=<filepath> --outdir=<ourdir> 
 
 Options:
 --filepath=<filepath>  Path of cleaned .csv file to download
 --outdir=<outdir>  Name of directory to be saved in, no slashes nesscesary, 'results' folder recommended.
-[<webbrowser>]  Optional, add 'firefox' to the argument if your web browser is Mozilla Firefox  
-                Otherwise, default web browser is Google chrome  
 
-Examples: python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results firefox
+Examples: python src/eda_plots.py --filepath=data/cleaned-credit-default-data.csv --outdir=results
 '''
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import altair as alt
-import selenium
 import seaborn as sns
+import matplotlib.pyplot as plt
 from docopt import docopt
 opt = docopt(__doc__)
 
 
-def main(filepath, outdir, webbrowser='chrome'):
+def main(filepath, outdir):
 
     #read data
     df = pd.read_csv(f"./{filepath}", index_col=0)
@@ -55,31 +53,16 @@ def main(filepath, outdir, webbrowser='chrome'):
         
     #Numeric features correlations
     corr = X_train[numeric_features].corr()
-    corr_df = corr.reset_index().melt(id_vars='index', var_name='yaxis', value_name='correlation')
-    num_corr_chart = alt.Chart(corr_df).mark_rect().encode(
-        alt.X('index:N', axis=alt.Axis(title=None)),
-        alt.Y('yaxis:N', axis=alt.Axis(title=None)),
-        alt.Color('correlation:Q')
-    ).properties(title='Correlations between numeric features')
-    num_corr_chart.save(f'./{outdir}/num_corr_chart.png', scale_factor=2, webdriver=webbrowser)
+    plt.figure(figsize=(12,10))
+    num_corr_chart = sns.heatmap(corr, cmap=plt.cm.Blues)
+    plt.title('Correlations between numeric features', size=16)
+    num_corr_chart.set_xticklabels(num_corr_chart.get_xticklabels(), rotation=45);
+    num_corr_chart.figure.savefig(f'./{outdir}/num_corr_chart.png')
 
     #Numeric and response variable correlations
     num_res_chart = voilinplot(df_train_melt, 'Numeric features');
     num_res_chart.savefig(f'./{outdir}/num_res_chart.png')
     
-    #Categorical and response variable correlations
-    ncol = 2  #how many to display in each row
-    row = alt.vconcat()
-    col = alt.hconcat()
-    for i in range(len(categorical_features)):
-        col |= stack_bar(df_train, categorical_features[i], 'DEFAULT_NEXT_MONTH')
-        if (i+1)%ncol==0:
-            row &= col
-            col = alt.hconcat()  
-    cat_res_chart = row & col  
-    cat_res_chart.save(f'./{outdir}/cat_res_chart.png', scale_factor=2, webdriver=webbrowser)
-
-
 def num_bar(data, fea):
     """
     Parameters:
@@ -126,28 +109,11 @@ def voilinplot(data, cat):
     seaborn voilin plot for numeric feature's distributions 
     at different categorical class values - faceted for all features
     """
-    g = sns.FacetGrid(data, col=cat, col_wrap=4, height=5, sharey=False)
+    g = sns.FacetGrid(data, col=cat, col_wrap=4, height=5, sharey=False, size=3)
     g.map(sns.violinplot, 'DEFAULT_NEXT_MONTH', 'value');
+    
     return g
     
-def stack_bar(data, cat_var, res_var_cat):
-    """
-    Parameters:
-    --------------
-    data: dataframe that has categorical and response variable columns
-    cat_var: string, name of the categorical column
-    res_var_cat: string, name of the response variable column(categorical variable)
-
-    Returns:
-    -------------
-    altair stackbar chart for categorical feature's distributions
-    at different response variable's class values
-    """
-    return alt.Chart(data).mark_bar().encode(
-    alt.Y(res_var_cat, type='nominal', title='Default'),
-    alt.X('count()', axis=alt.Axis(grid=False), stack='normalize', title=f'Count of {cat_var} - Normalized'),
-    alt.Color(cat_var, type='nominal')
-).properties(width=400)
 
 def test(filepath):
     """
@@ -164,9 +130,5 @@ def test(filepath):
 
 
 if __name__ == "__main__":
-    if opt['<webbrowser>']:
-        test(opt['--filepath'])
-        main(opt['--filepath'], opt['--outdir'], opt['<webbrowser>'])
-    else:
         test(opt['--filepath'])
         main(opt['--filepath'], opt['--outdir'])
