@@ -28,3 +28,5 @@ RUN /opt/conda/bin/conda install -y -c anaconda docopt
 
 # put anaconda python in path
 ENV PATH="/opt/conda/bin:${PATH}"
+
+CMD ["/bin/bash"]
