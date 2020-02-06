@@ -22,12 +22,19 @@ RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_6
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
     /opt/conda/bin/conda clean -afy && \
     /opt/conda/bin/conda update -n base -c defaults conda
-RUN apt-get install -y python3-sklearn python3-sklearn-lib
 
 # install docopt python package
 RUN /opt/conda/bin/conda install -y -c anaconda docopt
 
 # put anaconda python in path
 ENV PATH="/opt/conda/bin:${PATH}"
+RUN apt-get install -y python-docopt=0.6.2-2
+RUN apt-get install -y python3-pandas
+RUN apt-get install -y python3-sklearn python3-sklearn-lib
+RUN conda install -c conda-forge altair vega_datasets
+RUN conda install -c anaconda -y numpy
+RUN pip install -U imbalanced-learn
+RUN conda install -c anaconda -y seaborn
+RUN conda install -c conda-forge -y matplotlib
 
 CMD ["/bin/bash"]
