@@ -9,7 +9,7 @@ Usage: src/dl_xls_to_csv.py --output=<output> [--url=<url>]
 
 Options:
 --output=<output>  Name of file to be saved, to be stored in /data directory. Include .csv filetype.
-[--url=<url>]  Url of data to download, must be of xsl type.
+[--url=<url>]  Url of data to download, must be of xsl type. Defaults to https://archive.ics.uci.edu/ml/machine-learning-databases/00350/default%20of%20credit%20card%20clients.xls
 '''
 
 import pandas as pd
@@ -23,6 +23,7 @@ def main(output, url="https://archive.ics.uci.edu/ml/machine-learning-databases/
     df = pd.read_excel(url, encoding="utf-8")
     # save file as .csv type in the data directory
     df.to_csv(r"./data/%s" % (output))
+    assert df.shape == (30001, 25), "dimensions of accuracies is wrong"
 
 
 if __name__ == "__main__":
