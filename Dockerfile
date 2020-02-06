@@ -31,3 +31,4 @@ RUN pip install -U imbalanced-learn
 RUN conda install -c anaconda -y seaborn
 RUN conda install -c conda-forge -y matplotlib
 
+CMD ["/bin/bash"]
