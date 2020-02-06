@@ -1,15 +1,12 @@
-# Docker file for data_analysis_pipeline_eg
-# Tiffany Timbers, Jan, 2020
-
-# use rocker/tidyverse as the base image and
 FROM rocker/tidyverse
+RUN apt-get update
 
-# then install the cowsay & here packages
 RUN apt-get update -qq && apt-get -y --no-install-recommends install \
   && install2.r --error \
     --deps TRUE \
-    cowsay \
-    here
+    tidyverse \
+    testthat \
+    docopt
 
 # install the anaconda distribution of python
 RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh -O ~/anaconda.sh && \
@@ -23,12 +20,9 @@ RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_6
     /opt/conda/bin/conda clean -afy && \
     /opt/conda/bin/conda update -n base -c defaults conda
 
-# install docopt python package
-RUN /opt/conda/bin/conda install -y -c anaconda docopt
+ENV PATH /opt/conda/bin:$PATH
 
-# put anaconda python in path
-ENV PATH="/opt/conda/bin:${PATH}"
-RUN apt-get install -y python-docopt=0.6.2-2
+RUN conda install -c anaconda -y docopt
 RUN apt-get install -y python3-pandas
 RUN apt-get install -y python3-sklearn python3-sklearn-lib
 RUN conda install -c conda-forge altair vega_datasets
