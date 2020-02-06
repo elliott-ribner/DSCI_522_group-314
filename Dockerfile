@@ -22,6 +22,7 @@ RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_6
     find /opt/conda/ -follow -type f -name '*.js.map' -delete && \
     /opt/conda/bin/conda clean -afy && \
     /opt/conda/bin/conda update -n base -c defaults conda
+RUN apt-get install -y python3-sklearn python3-sklearn-lib
 
 # install docopt python package
 RUN /opt/conda/bin/conda install -y -c anaconda docopt
