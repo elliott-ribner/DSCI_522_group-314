@@ -22,7 +22,7 @@ results/cat_res_chart.png results/head.csv results/num_describe.csv : data/clean
 
 #create final report .html	
 doc/final_report.html : results
-	jupyter nbconvert --execute  doc/final_report.ipynb --to html_embed  
+	jupyter nbconvert --execute  doc/final_report.ipynb --to html_embed | jupyter nbconvert --execute  doc/final_report.ipynb --to html
 
 #clean all data, results
 clean:

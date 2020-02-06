@@ -22,7 +22,7 @@ RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_6
 
 ENV PATH /opt/conda/bin:$PATH
 
-RUN apt-get install -y python-docopt=0.6.2-2
+RUN conda install -c anaconda -y docopt
 RUN apt-get install -y python3-pandas
 RUN apt-get install -y python3-sklearn python3-sklearn-lib
 RUN conda install -c conda-forge altair vega_datasets
@@ -31,3 +31,4 @@ RUN pip install -U imbalanced-learn
 RUN conda install -c anaconda -y seaborn
 RUN conda install -c conda-forge -y matplotlib
 
+CMD ["/bin/bash"]
