@@ -14,6 +14,7 @@ Examples: python src/eda_plots.py --filepath=data/cleaned-credit-default-data.cs
 '''
 
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
 import altair as alt
 import seaborn as sns
@@ -53,6 +54,9 @@ def main(filepath, outdir):
         
     #Numeric features correlations
     corr = X_train[numeric_features].corr()
+    #Set diagonal corretion to NaN
+    for i in range(len(corr)):
+        corr.iloc[i, i] = np.nan
     plt.figure(figsize=(12,10))
     num_corr_chart = sns.heatmap(corr, cmap=plt.cm.Blues)
     plt.title('Correlations between numeric features', size=16)
@@ -111,6 +115,7 @@ def voilinplot(data, cat):
     """
     g = sns.FacetGrid(data, col=cat, col_wrap=4, height=5, sharey=False, size=3)
     g.map(sns.violinplot, 'DEFAULT_NEXT_MONTH', 'value');
+    g.set(yscale='symlog', ylabel='Symlog value')
     
     return g
     
