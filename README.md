@@ -20,21 +20,20 @@ Due to imbalanced class in the response variable, we used [SMOTE](https://imbala
 
 ## Usage
 
-
 There are two methods to replicate the analysis in this project : 
 
 #### 1. Using Docker
 
-Install [Docker](https://www.docker.com/get-started) and then download/clone this repository. Next, use the command line to navigate to the root of this downloaded/cloned repo andtype the following in the shell:
+Install [Docker](https://www.docker.com/get-started) and then download/clone this repository. Next, use the command line to navigate to the root of this downloaded/cloned repo and type the following in the shell:
 
 ```
-docker run --rm -v C:/DOCs/Canada/BC/UBC/courses/block4/dsci522/lab/DSCI_522_group-314:/home/credit-analysis eribner201/credit-analysis make -C /home/credit-analysis all
+docker run --rm -v /$(pwd):/home/credit-analysis eribner201/credit-analysis make -C /home/credit-analysis all
 ```
 
 To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
 
 ```
-docker run --rm -v C:/DOCs/Canada/BC/UBC/courses/block4/dsci522/lab/DSCI_522_group-314:/home/credit-analysis eribner201/credit-analysis make -C /home/credit-analysis clean
+docker run --rm -v /$(pwd):/home/credit-analysis eribner201/credit-analysis make -C /home/credit-analysis clean
 ```
 
 #### 2. After installing all dependencies (does not depend on Docker)
@@ -67,6 +66,10 @@ make clean
       - testthat==2.3.1
       - docopt==0.6.1
   - GNU make 4.2.1 
+      
+## Makefile dependency graph
+
+![](Makefile.png)
       
 ## References  
 
