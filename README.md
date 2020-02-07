@@ -20,7 +20,22 @@ Due to imbalanced class in the response variable, we used [SMOTE](https://imbala
 
 ## Usage
 
-To replicate the analysis, clone this GitHub repository, install the dependencies listed below, and run the following commands at the command line/terminal from the root directory of this project:
+
+There are two methods to replicate the analysis in this project : 
+
+#### 1. Using Docker
+
+Install [Docker](https://www.docker.com/get-started) and then download/clone this repository. Next, use the command line to navigate to the root of this downloaded/cloned repo andtype the following in the shell:
+
+```
+docker run -it --rm -v /Users/mosal/DSCI_522_group-314:/group-314_project dataubc/dsci_522_group-314  make -C /group-314_project  all /bin/bash
+```
+
+
+
+#### 2. After installing all dependencies (does not depend on Docker)
+
+Clone this GitHub repository, install the dependencies listed below, and run the following commands at the command line/terminal from the root directory of this project:
 
 ```
 make all
