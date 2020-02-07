@@ -30,6 +30,19 @@ accuracies_output_df = pd.DataFrame({'measurement': [
 
 
 def get_report(X_train, y_train, X_test, y_test, model, output):
+
+    """
+    Script to fit the models and perfom predictions and then save the resulls .
+    Arguments
+    ---------
+    X_train : data frame containing the features of training data
+    y_train : data frame containing the response of training data
+    X_test : data frame containing the features of test data
+    y_test : data frame containing the response of test data
+    model : model used for fitting the data
+    output : name of the folder for the output
+ 
+    """
     os = SMOTE(random_state=0)
     os_data_X, os_data_y = os.fit_sample(X_train, y_train)
     os_data_X = pd.DataFrame(data=os_data_X, columns=X_train.columns)
@@ -81,6 +94,16 @@ def get_report(X_train, y_train, X_test, y_test, model, output):
 
 
 def main(input, output):
+
+    """
+    Script to read the data, perform wrangling and output the accuracy as a dataframe .
+    Arguments
+    ---------
+    input : file for the data
+    output : table of the accuracy
+
+ 
+    """
     # turn csv to dataframe
     df = pd.read_csv(f"./data/{input}", index_col=0)
 
