@@ -53,18 +53,20 @@ make clean
 ## Dependencies
 
   - Python 3.7.3 and Python packages:
-      - docopt==0.6.2
-      - pandas==0.25.3
-      - sklearn==0.22
-      - altair==3.2.0
-      - numpy==1.17.4
+      - docopt=0.6.2
+      - pandas=0.25.3
+      - sklearn=0.22
+      - altair=3.2.0
+      - numpy=1.17.4
       - imblearn=0.6.1
       - seaborn=0.9.0
       - matplotlib=3.1.1
   - R version 3.6.1 and R packages:
-      - tidyverse==1.2.1
-      - testthat==2.3.1
-      - docopt==0.6.1
+      - tidyverse=1.2.1
+      - testthat=2.3.1
+      - docopt=0.6.1
+  - Jupyter notebook(To render variable values in notebook or html format, install instruction see [here](https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/install.html)):
+      - jupyter_contrib_nbextensions=0.5.1
   - GNU make 4.2.1 
       
 ## Makefile dependency graph

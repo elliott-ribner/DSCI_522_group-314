@@ -37,5 +37,8 @@ RUN pip install -U imbalanced-learn
 RUN conda install -c anaconda -y seaborn
 RUN conda install -c conda-forge -y matplotlib
 
+#install jupyter_contrib_nbextensions
+RUN conda install -c conda-forge jupyter_contrib_nbextensions -y
+
 # default to using entering docker terminal rather than GUI
 CMD ["/bin/bash"]
