@@ -1,3 +1,7 @@
+# Reproduce results and report for this Prediction of Customer Default repo
+# author: Zoe Pan
+# date: 2020-01-30
+
 #Make all plots, tables and render fianl report as .html format
 all: doc/final_report.html
 
@@ -9,7 +13,7 @@ data/credit-default-data.csv : src/dl_xls_to_csv.py
 	python src/dl_xls_to_csv.py --output=credit-default-data.csv
 
 #data wrangling and save cleaned data to data folder
-data/cleaned-credit-default-data.csv : data/credit-default-data.csv src/wrangle.r 
+data/cleaned-credit-default-data.csv : data/credit-default-data.csv src/wrangle.R 
 	Rscript src/wrangle.R credit-default-data.csv cleaned-credit-default-data.csv
 
 #save data analysis results to results and results_baseline folder
@@ -22,7 +26,7 @@ results/cat_res_chart.png results/head.csv results/num_describe.csv : data/clean
 
 #create final report .html	
 doc/final_report.html : results
-	jupyter nbconvert --execute  doc/final_report.ipynb --to html_embed | jupyter nbconvert --execute  doc/final_report.ipynb --to html
+	jupyter nbconvert --execute  doc/final_report.ipynb --to html
 
 #clean all data, results
 clean:

@@ -20,7 +20,25 @@ Due to imbalanced class in the response variable, we used [SMOTE](https://imbala
 
 ## Usage
 
-To replicate the analysis, clone this GitHub repository, install the dependencies listed below, and run the following commands at the command line/terminal from the root directory of this project:
+There are two methods to replicate the analysis in this project : 
+
+#### 1. Using Docker
+
+Install [Docker](https://www.docker.com/get-started) and then download/clone this repository. Next, use the command line to navigate to the root of this downloaded/cloned repo and type the following in the shell:
+
+```
+docker run --rm -v /$(pwd):/home/credit-analysis eribner201/credit-analysis make -C /home/credit-analysis all
+```
+
+To reset the repo to a clean state, with no intermediate or results files, run the following command at the command line/terminal from the root directory of this project:
+
+```
+docker run --rm -v /$(pwd):/home/credit-analysis eribner201/credit-analysis make -C /home/credit-analysis clean
+```
+
+#### 2. After installing all dependencies (does not depend on Docker)
+
+Clone this GitHub repository, install the dependencies listed below, and run the following commands at the command line/terminal from the root directory of this project:
 
 ```
 make all
@@ -35,18 +53,25 @@ make clean
 ## Dependencies
 
   - Python 3.7.3 and Python packages:
-      - docopt==0.6.2
-      - pandas==0.25.3
-      - sklearn==0.22
-      - altair==3.2.0
-      - numpy==1.17.4
+      - docopt=0.6.2
+      - pandas=0.25.3
+      - sklearn=0.22
+      - altair=3.2.0
+      - numpy=1.17.4
       - imblearn=0.6.1
       - seaborn=0.9.0
       - matplotlib=3.1.1
   - R version 3.6.1 and R packages:
-      - tidyverse==1.2.1
-      - testthat==2.3.1
-      - docopt==0.6.1
+      - tidyverse=1.2.1
+      - testthat=2.3.1
+      - docopt=0.6.1
+  - Jupyter notebook(To render variable values in notebook or html format, install instruction see [here](https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/install.html)):
+      - jupyter_contrib_nbextensions=0.5.1
+  - GNU make 4.2.1 
+      
+## Makefile dependency graph
+
+![](Makefile.png)
       
 ## References  
 
